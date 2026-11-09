@@ -1,0 +1,92 @@
+{
+  "name": "purchase-master",
+  "version": "1.0.0",
+  "description": "Bipin Petroleum Co. Purchase and Stock Management System",
+  "author": "Bipin Petroleum Co.",
+  "private": true,
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"vite --port 3000\" \"wait-on http://localhost:3000 && electron . --dev\"",
+    "electron:build": "vite build && electron-builder",
+    "electron:build:win": "vite build && electron-builder --win --x64",
+    "electron:build:portable": "vite build && electron-builder --win portable",
+    "build:exe": "vite build && electron-builder --win nsis portable"
+  },
+  "build": {
+    "appId": "com.zenterprime.bipinpetroleum",
+    "productName": "Bipin Petroleum Co",
+    "copyright": "Copyright © 2026 Bipin Petroleum Co. Powered by ZenterPrime",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "preload.js",
+      "preload.cjs",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+
+      "icon": "public/bpc_logo.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Bipin Petroleum Co"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.exe"
+    }
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "html-to-image": "^1.11.13",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
+    "lucide-react": "^0.460.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.0",
+    "tailwindcss": "^4.3.3",
+    "xlsx": "0.18.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.3.0",
+    "concurrently": "^10.0.5",
+    "cross-env": "^10.1.0",
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.3",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0",
+    "wait-on": "^9.1.0"
+  }
+}

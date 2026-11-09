@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // Fix for read-only window.fetch in some iframe / proxy environments
+      try {
+        let originalFetch = window.fetch;
+        Object.defineProperty(window, 'fetch', {
+          get() {
+            return originalFetch;
+          },
+          set(value) {
+            originalFetch = value;
+          },
+          configurable: true,
+          enumerable: true
+        });
+      } catch (e) {
+        console.warn("Could not patch window.fetch setter:", e);
+      }
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bipin Petroleum Co. - Powered by ZenterPrime</title>
+    <meta name="description" content="Offline-first desktop and web management system for Bipin Petroleum Co. with local database persistence and automated backup schedule." />
+    <meta name="theme-color" content="#146daf" />
+    <link rel="manifest" href="./manifest.json" />
+    <script>
+      // Clean up stale service workers or caches in http/https environments safely
+      try {
+        if (typeof window !== 'undefined' && window.location.protocol !== 'file:') {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+              for (let registration of registrations) {
+                registration.unregister();
+              }
+            }).catch(function() {});
+          }
+          if ('caches' in window) {
+            caches.keys().then(function(names) {
+              for (let name of names) {
+                caches.delete(name);
+              }
+            }).catch(function() {});
+          }
+        }
+      } catch (e) {
+        console.warn("Storage cleanup notice:", e);
+      }
+    </script>
+    
+    <!-- Google Fonts: Geologica & Georama (Geometric Sans Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700&family=Georama:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2215%22 fill=%22%23146daf%22/><text x=%2250%%22 y=%2252%%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ffffff%22 style=%22font-size:52px;font-weight:800;font-family:sans-serif%22>B</text></svg>">
+
+    <script>
+      // Enforce strict light mode
+      try {
+        document.documentElement.classList.remove('dark');
+        localStorage.removeItem('app_theme');
+      } catch (e) {
+        // Fallback for restricted storage environments
+      }
+    </script>
+</head>
+  <body class="dark:bg-slate-950 dark:text-slate-100">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
